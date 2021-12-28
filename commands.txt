@@ -1,0 +1,16 @@
+docker run --name db -d -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 mysql:latest
+docker ps
+docker exec -it db /bin/bash
+mysql -uroot -p123
+bash start.sh
+docker run -it -p 8123:8123 --link db:db -e DATABASE_HOST=DB users-service
+docker build -t users-service .
+docker run -it -p 8123:8123 users-service
+docker run -it -p 8123:8123 --link db:db -e DATABASE_HOST=DB users-service
+docker exec compassionate_jones cat  /etc/hosts
+docker exec compassionate_jones printenv | grep DB
+docker build -t test-database .
+docker run --name db test-database
+docker-compose build
+docker-compose up
+compose down
